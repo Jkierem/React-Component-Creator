@@ -2,9 +2,9 @@
   "name": "juan-component",
   "version": "1.0.0",
   "description": "Tool to create React components.",
-  "main": "src/index.js",
+  "main": "src/juan-component.js",
   "scripts": {
-    "test": "node src/index.js"
+    "test": "node src/juan-component.js"
   },
   "repository": {
     "type": "git",
