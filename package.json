@@ -1,0 +1,27 @@
+{
+  "name": "react-component-creator",
+  "version": "1.0.0",
+  "description": "Tool to create React components.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jkierem/react-component-creator.git"
+  },
+  "keywords": [
+    "react",
+    "nodejs"
+  ],
+  "author": "Juan Miguel Gomez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jkierem/react-component-creator/issues"
+  },
+  "homepage": "https://github.com/Jkierem/react-component-creator#readme",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "commander": "^2.16.0"
+  }
+}
