@@ -1,13 +1,16 @@
-const fs = require('fs');
 const path = require('path');
 const program = require('commander');
+const chalk = require('chalk');
 
-const chalk = require('chalk')
 const warning = chalk.white.bgYellow;
 const error = chalk.white.bgRed;
 const highlight = chalk.greenBright;
 const success = chalk.greenBright;
 const title = chalk.cyanBright.bold;
+
+const createHOC = require('./createHOC')
+const createFuncComponent = require('./createFuncComponent');
+const createClassComponent = require('./createClassComponent');
 
 const checkType = (program) =>{
   const { hoc , func , type } = program;
@@ -56,13 +59,13 @@ const getProps = (program) =>{
   return propList
 }
 
-const getStyle = (program) => {
+const getStyle = (program,info) => {
   const { styled , css } = program;
   let style = {}
 
   if( styled ){
     if( styled === true ){
-      style.js = "style"
+      style.js = `${info.name.toLowerCase()}Style`
     }else{
       style.js = styled
     }
@@ -101,7 +104,6 @@ const successMsg = (info) => {
 
   let pString = "[";
   info.props.forEach((prop)=>{
-    console.log(prop);
     pString = pString + ` ${prop} ,`
   })
   pString = pString.slice(0,-1) + "]";
@@ -114,21 +116,21 @@ const successMsg = (info) => {
   console.log(`${title("Styling:")} ${styling}`);
 }
 
-const createHOC = (info) =>{ return true ; }
-const createFuncComponent  = (info) =>{ return true ; }
-const createClassComponent  = (info) =>{ return true ; }
+const errorMsg = (err) => {
+  if(err){
+    console.log(err);
+  }
+  console.log(chalk.yellow("Stopped execution due to error"));
+}
 
 const createComponent = (info) => {
   switch (info.type) {
     case "hoc":
       return createHOC(info)
-      break;
     case "func":
       return createFuncComponent(info)
-      break;
     default:
       return createClassComponent(info)
-      break;
   }
 }
 
@@ -146,10 +148,10 @@ program
   .option('--type <type>','choose component type, either func, hoc or class.',/^(func|hoc|class)$/i)
   .option('-f --func','create a functional component')
   .option('-i --hoc','create a higher order component')
-  .option('-s --styled [name]','add js style to component')
-  .option('-c --css [class]','add class and create a css file')
+  .option('-s --styled [name]','add js style to component. Ignored in HOCs.')
+  .option('-c --css [class]','add class and create a css file. Ignored in HOCs.')
   .option('--verbose','shows additional information')
-  .option('-p --props <props>','Specify the names of props to be passed on. If it is a functional component, destructuring of props will be used. The props must be separated by comma with no spaces.')
+  .option('-p --props <props>','Specify the names of props to be passed on. If it is a functional component, destructuring of props will be used. If it is a HOC the props will be injected. The props must be separated by comma with no spaces.')
   .parse(process.argv);
 
 let hasErr = false;
@@ -160,16 +162,14 @@ info = {
   ...info,
   type,
   verbose,
-  style: getStyle(program),
+  style: getStyle(program,info),
   props: getProps(program)
 }
 
 if( hasErr ){
-  console.log(chalk.yellow("Stopped execution due to error"));
+  errorMsg();
 }else{
-  if( createComponent(info) ){
-    successMsg(info)
-  }else{
-    console.log(chalk.yellow("Stopped execution due to error"));
-  }
+  createComponent(info)
+  .then(() => successMsg(info))
+  .catch((err) => errorMsg(err));
 }
