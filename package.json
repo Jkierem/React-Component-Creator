@@ -6,6 +6,10 @@
   "scripts": {
     "test": "node src/juan-component.js"
   },
+  "bin": {
+     "dosomethingawesome": "./bin/demo-global.js"
+  },
+  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Jkierem/juan-component.git"
@@ -23,11 +27,5 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.16.0"
-  },
-  "bin":{
-    "createComponent" : "./src/juan-component ",
-    "createPure": "./src/juan-component -f ",
-    "createHOC": "./src/juan-component -i ",
-  },
-  "preferGlobal": true
+  }
 }
