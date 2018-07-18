@@ -1,6 +1,6 @@
 {
   "name": "juan-component",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Tool to create React components.",
   "main": "src/juan-component.js",
   "scripts": {
@@ -8,8 +8,8 @@
   },
   "bin": {
     "createComponent": "./src/juan-component.js",
-    "createPure":"./src/juan-component -f",
-    "createHOC":"./src/juan-component -i "
+    "createPure": "./src/juan-component -f",
+    "createHOC": "./src/juan-component -i "
   },
   "preferGlobal": true,
   "repository": {
