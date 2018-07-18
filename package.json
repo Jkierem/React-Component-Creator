@@ -7,7 +7,9 @@
     "test": "node src/juan-component.js"
   },
   "bin": {
-    "createComponent": "./src/juan-component.js"
+    "createComponent": "./src/juan-component.js",
+    "createPure":"./src/juan-component -f ",
+    "createHOC":"./src/juan-component -i "
   },
   "preferGlobal": true,
   "repository": {
