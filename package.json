@@ -23,5 +23,11 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.16.0"
-  }
+  },
+  "bin":{
+    "createComponent" : "./src/juan-component ",
+    "createPure": "./src/juan-component -f ",
+    "createHOC": "./src/juan-component -i ",
+  },
+  "preferGlobal": true
 }
