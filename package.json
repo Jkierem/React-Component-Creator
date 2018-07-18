@@ -1,6 +1,6 @@
 {
   "name": "juan-component",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Tool to create React components.",
   "main": "src/juan-component.js",
   "scripts": {
