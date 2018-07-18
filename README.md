@@ -5,7 +5,9 @@ Simple NodeJS command line tool to create React components.
 ## Usage
 
 ```shell
-$ juan-component <name> [parentDirectory] [options]
+$ createComponent <name> [parentDirectory] [options]
+$ createPure <name> [parentDirectory] [options]
+$ createHOC <name> [parentDirectory] [options]
 ```
 
 The tool can create 3 types of components: Functional, Class or HOCs.
