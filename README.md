@@ -6,8 +6,6 @@ Simple NodeJS command line tool to create React components.
 
 ```shell
 $ createComponent <name> [parentDirectory] [options]
-$ createPure <name> [parentDirectory] [options]
-$ createHOC <name> [parentDirectory] [options]
 ```
 
 The tool can create 3 types of components: Functional, Class or HOCs.
@@ -44,7 +42,6 @@ export default MyReactComponent
 - If the path does not exist, it will not create the component
 - Component names must start with an upper case letter
 - The tool always creates a folder inside the given path with the component's name and a "index.js" file. This cannot be changed.
-- There are shorthand commands for creating HOCs and functional components (createHOC and createPure respectively).
 
 ### Options
 
