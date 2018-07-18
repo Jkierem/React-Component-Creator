@@ -8,7 +8,7 @@
   },
   "bin": {
     "createComponent": "./src/juan-component.js",
-    "createPure":"./src/juan-component -f ",
+    "createPure":"./src/juan-component -f",
     "createHOC":"./src/juan-component -i "
   },
   "preferGlobal": true,
