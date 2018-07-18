@@ -7,7 +7,7 @@
     "test": "node src/juan-component.js"
   },
   "bin": {
-    "dosomethingawesome": "./bin/demo-global.js"
+    "createComponent": "./src/juan-component.js"
   },
   "preferGlobal": true,
   "repository": {
