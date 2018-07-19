@@ -1,6 +1,7 @@
 'use-strict'
 
 const utils = require('./utils');
+const core = require('./core');
 
 const getContent = (info) => {
   const { name , props , style } = info;
@@ -28,7 +29,7 @@ const getContent = (info) => {
 }
 
 const createClassComponent = (info) => {
-  return utils.createComponent(info,getContent)
+  return core.createComponent(info,getContent)
 }
 
 module.exports = createClassComponent

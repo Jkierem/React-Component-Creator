@@ -10,7 +10,8 @@ const highlight = chalk.greenBright;
 const success = chalk.greenBright;
 const title = chalk.cyanBright.bold;
 
-const createHOC = require('./createHOC')
+const codes = require('./codes.js');
+const createHOC = require('./createHOC');
 const createFuncComponent = require('./createFuncComponent');
 const createClassComponent = require('./createClassComponent');
 
@@ -18,24 +19,23 @@ const checkType = (program) =>{
   const { hoc , func , type } = program;
   if( (hoc && func) || (type && (hoc || func) ) ){
     console.log(`${error("Error:")} multiple types suppplied.`);
-    return true;
+    return { valid: false , err: codes.MULTI_TYPE };
   }else{
     if( !type ){
       if( hoc ){
-        program.type = "hoc"
+        return { valid: true , type: "hoc"   }
       }else if( func ){
-        program.type = "func"
+        return { valid: true , type: "func"  }
       }else{
-        program.type = "class"
+        return { valid: true , type: "class" }
       }
     }else{
       if( type === true ){
         console.log(`${error("Error:")} invalid type. Valid types are ${highlight("func")}, ${highlight("hoc")} and ${highlight("class")}`);
-        return true;
+        return { valid: false , err: codes.WRONG_TYPE};
       }
     }
   }
-  return false;
 }
 
 const checkName = (name) => {

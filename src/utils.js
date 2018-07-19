@@ -39,26 +39,6 @@ const createFile = (path,content) => {
   })
 }
 
-const createComponent = (info,getContent) => {
-  const { path:dir , name , props, style } = info;
-  const content = getContent(info);
-  const fullPath = path.join(dir,name)
-  const fileName = path.join(fullPath,"index.js")
-  return checkDirectory(dir).then(()=>{
-    return createDirectory(fullPath)
-  }).then(()=>{
-    return createFile(fileName,content)
-  }).then(()=>{
-    if(style.css){
-      const cssFileName = path.join(fullPath,`${name}.css`);
-      const cssContent  = `.${style.css} {\n\n}`
-      return createFile(cssFileName,cssContent)
-    }else{
-      return true
-    }
-  })
-}
-
 const getStyleStrings = (name,style) =>{
   let styleObj = ''
   let styleInline = ''
@@ -102,7 +82,6 @@ module.exports = {
   checkDirectory,
   createDirectory,
   createFile,
-  createComponent,
   getStyleStrings,
   getPropsDeconstruction
 }
