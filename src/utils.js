@@ -45,10 +45,8 @@ const getStyleStrings = (name,style={}) =>{
 
   if (style.js){
     styleObj = `\nconst ${style.js} = {\n   //fill me with style \n}\n`
-    styleInline = ` style={${style.js}}`
-    if (!style.css){
-      styleInline += " "
-    }
+    styleInline = ` style={${style.js}} `
+
   }
 
   let cssClass = ''
@@ -56,7 +54,10 @@ const getStyleStrings = (name,style={}) =>{
 
   if (style.css){
     cssStyle = `import "./${name}.css"\n`
-    cssClass = ` className="${style.css}" `
+    cssClass = ` className="${style.css}"`
+    if (!style.js){
+      styleInline += " "
+    }
   }
   return {
     styleObj,

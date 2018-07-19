@@ -18,7 +18,7 @@ const getContent = (info) => {
          `  render(){\n` +
          `${propsString}` +
          `    return (\n` +
-         `      <div${styleInline}${cssClass}>\n` +
+         `      <div${cssClass}${styleInline}>\n` +
          `         ${name}\n` +
          `      </div>\n` +
          `    )\n` +
