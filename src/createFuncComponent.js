@@ -1,7 +1,6 @@
 'use-strict'
 
 const utils = require('./utils');
-const core = require('./core');
 
 const getContent = (info) => {
   const { name , props , style } = info;
@@ -19,8 +18,6 @@ const getContent = (info) => {
          `  )\n}\n\nexport default ${name};`
 }
 
-const createFuncComponent = (info) => {
-  return core.createComponent(info,getContent)
+module.exports = (info) => {
+  return utils.createComponent(info,getContent)
 }
-
-module.exports = createFuncComponent
