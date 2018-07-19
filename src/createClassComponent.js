@@ -1,5 +1,3 @@
-'use-strict'
-
 const utils = require('./utils');
 
 const getContent = (info) => {
@@ -20,15 +18,13 @@ const getContent = (info) => {
          `  render(){\n` +
          `${propsString}` +
          `    return (\n` +
-         `      <div${styleInline}${cssClass}>\n` +
+         `      <div${cssClass}${styleInline}>\n` +
          `         ${name}\n` +
          `      </div>\n` +
          `    )\n` +
          `  }\n\n}\n\nexport default ${name};`
 }
 
-const createClassComponent = (info) => {
+module.exports = (info) => {
   return utils.createComponent(info,getContent)
 }
-
-module.exports = createClassComponent

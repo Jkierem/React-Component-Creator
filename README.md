@@ -42,6 +42,7 @@ export default MyReactComponent
 - If the path does not exist, it will not create the component
 - Component names must start with an upper case letter
 - The tool always creates a folder inside the given path with the component's name and a "index.js" file. This cannot be changed.
+- Shorthand commands exist to create HOCs and functional components. They are createHOC and createPure.
 
 ### Options
 

@@ -39,36 +39,14 @@ const createFile = (path,content) => {
   })
 }
 
-const createComponent = (info,getContent) => {
-  const { path:dir , name , props, style } = info;
-  const content = getContent(info);
-  const fullPath = path.join(dir,name)
-  const fileName = path.join(fullPath,"index.js")
-  return checkDirectory(dir).then(()=>{
-    return createDirectory(fullPath)
-  }).then(()=>{
-    return createFile(fileName,content)
-  }).then(()=>{
-    if(style.css){
-      const cssFileName = path.join(fullPath,`${name}.css`);
-      const cssContent  = `.${style.css} {\n\n}`
-      return createFile(cssFileName,cssContent)
-    }else{
-      return true
-    }
-  })
-}
-
-const getStyleStrings = (name,style) =>{
+const getStyleStrings = (name,style={}) =>{
   let styleObj = ''
   let styleInline = ''
 
   if (style.js){
     styleObj = `\nconst ${style.js} = {\n   //fill me with style \n}\n`
-    styleInline = ` style={${style.js}}`
-    if (!style.css){
-      styleInline += " "
-    }
+    styleInline = ` style={${style.js}} `
+
   }
 
   let cssClass = ''
@@ -76,7 +54,10 @@ const getStyleStrings = (name,style) =>{
 
   if (style.css){
     cssStyle = `import "./${name}.css"\n`
-    cssClass = ` className="${style.css}" `
+    cssClass = ` className="${style.css}"`
+    if (!style.js){
+      styleInline += " "
+    }
   }
   return {
     styleObj,
@@ -98,11 +79,31 @@ const getPropsDeconstruction = (props) => {
   }
 }
 
+const createComponent = (info,getContent) => {
+  const { path:dir , name , props, style } = info;
+  const content = getContent(info);
+  const fullPath = path.join(dir,name)
+  const fileName = path.join(fullPath,"index.js")
+  return checkDirectory(dir).then(()=>{
+    return createDirectory(fullPath)
+  }).then(()=>{
+    return createFile(fileName,content)
+  }).then(()=>{
+    if(style.css){
+      const cssFileName = path.join(fullPath,`${name}.css`);
+      const cssContent  = `.${style.css} {\n\n}`
+      return createFile(cssFileName,cssContent)
+    }else{
+      return true
+    }
+  })
+}
+
 module.exports = {
   checkDirectory,
   createDirectory,
   createFile,
-  createComponent,
   getStyleStrings,
-  getPropsDeconstruction
+  getPropsDeconstruction,
+  createComponent
 }

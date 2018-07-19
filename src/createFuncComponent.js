@@ -12,14 +12,12 @@ const getContent = (info) => {
          `${cssStyle}${styleObj}\n` +
          `const ${name} = (${getProps(props)}) => {\n` +
          `  return(\n` +
-         `    <div${styleInline}${cssClass}>\n` +
+         `    <div${cssClass}${styleInline}>\n` +
          `      ${name}\n` +
          `    </div>\n` +
          `  )\n}\n\nexport default ${name};`
 }
 
-const createFuncComponent = (info) => {
+module.exports = (info) => {
   return utils.createComponent(info,getContent)
 }
-
-module.exports = createFuncComponent
