@@ -8,8 +8,8 @@
   },
   "bin": {
     "createComponent": "./src/juan-component.js",
-    "createPure": "./src/juan-func.js",
-    "createHOC": "./src/juan-hoc.js"
+    "createFunctional": "./src/juan-func.js",
+    "createHigher": "./src/juan-hoc.js"
   },
   "preferGlobal": true,
   "repository": {
