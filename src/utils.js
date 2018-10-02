@@ -96,6 +96,25 @@ const createComponent = (info,getContent) => {
     }else{
       return true
     }
+  }).then(()=>{
+    if( info.type === "cont" ){
+      const actions = path.join(fullPath,"actions.js")
+      const constants = path.join(fullPath,"constants.js")
+      const reducer = path.join(fullPath,"reducer.js")
+      const reducerContent = `export default const ${name}Reducer = (state,action) => state;`
+      const selectors = path.join(fullPath,"selectors.js")
+      const selContent = `import { createSelector } from 'reselect';\n`
+      return new Promise(function(resolve, reject) {
+        createFile(actions,"")
+        .then(( ) => createFile(constants,"") )
+        .then(( ) => createFile(reducer,reducerContent) )
+        .then(( ) => createFile(selectors,selContent) )
+        .then(() => resolve(true))
+        .catch(() => reject(false))
+      });
+    }else{
+      return true
+    }
   })
 }
 

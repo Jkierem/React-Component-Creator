@@ -9,6 +9,7 @@ const messages = require('./messages');
 const createHOC = require('./createHOC');
 const createFuncComponent = require('./createFuncComponent');
 const createClassComponent = require('./createClassComponent');
+const createContainerComponent = require('./createContainerComponent');
 
 const checkName = (name) => {
   if( name === undefined ){
@@ -34,8 +35,9 @@ const validateName = (name) => {
 }
 
 const checkType = (program) => {
-  const { hoc , func , type } = program;
-  if( (hoc && func) || (type && (hoc || func) ) ){
+  const { hoc , func , cont , type } = program;
+  const activeTypes = [ hoc , func , cont ].reduce((agg , item) => item? agg+1 : agg , 0)
+  if( activeTypes > 1 || (type && activeTypes !== 0) ){
     return { valid: false , err: codes.MULTI_TYPE };
   }else{
     if( !type ){
@@ -43,6 +45,8 @@ const checkType = (program) => {
         return { valid: true , type: "hoc"   }
       }else if( func ){
         return { valid: true , type: "func"  }
+      }else if( cont ){
+        return { valid: true , type: "cont"  }
       }else{
         return { valid: true , type: "class" }
       }
@@ -124,9 +128,10 @@ const runProgram = (argv) => {
         path: file ? path.normalize(file) : './src/components'
       }
     })
-    .option('--type <type>','choose component type, either func, hoc or class.',/^(func|hoc|class)$/i)
+    .option('--type <type>','choose component type, either func, hoc or class.',/^(func|hoc|class|cont)$/i)
     .option('-f --func','create a functional component')
     .option('-i --hoc','create a higher order component')
+    .option('-r --cont','create a redux container component')
     .option('-s --styled [name]','add js style to component. Ignored in HOCs.')
     .option('-c --css [class]','add class and create a css file. Ignored in HOCs.')
     .option('--verbose','shows additional information')
@@ -154,6 +159,8 @@ const writeComponent = (info) => {
       return createHOC(info)
     case "func":
       return createFuncComponent(info)
+    case "cont":
+      return createContainerComponent(info)
     default:
       return createClassComponent(info)
   }

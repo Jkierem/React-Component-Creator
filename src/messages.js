@@ -63,7 +63,8 @@ const showSuccessMessage = (info) => {
     })
   }
   pString = pString.slice(0,-1) + "]";
-  const typeString = info.type === "func" ? "Functional" : info.type === "hoc" ? "Higher Order" : "Class";
+  const typeString = info.type === "func" ? "Functional" :
+  info.type === "hoc" ? "Higher Order" : info.type === "cont" ? "Container" : "Class";
   console.log(`${success("Success!")}`);
   console.log(`${title("Name:   ")} ${info.name}`);
   console.log(`${title("Path:   ")} ${info.path}`);

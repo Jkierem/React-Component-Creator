@@ -9,7 +9,8 @@
   "bin": {
     "createComponent": "./src/juan-component.js",
     "createFunctional": "./src/juan-func.js",
-    "createHigher": "./src/juan-hoc.js"
+    "createHigher": "./src/juan-hoc.js",
+    "createContainer": "./src/juan-cont.js"
   },
   "preferGlobal": true,
   "repository": {
