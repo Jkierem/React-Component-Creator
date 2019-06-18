@@ -18,10 +18,12 @@ const pickType = (program) => {
   return Object.keys(partial).reduce((prev, next) => prev || partial[next] ? next : false, false) || 'class'
 }
 
+const pickProps = ({ props }) => props ? props.split(',') : []
+
 const getInformation = (program) => {
-  const type = pickType(program)
   return {
-    type
+    type: pickType(program),
+    props: pickProps(program)
   }
 }
 
@@ -54,9 +56,9 @@ const runProgram = async (argv) => {
   program.parse(argv);
   try {
     validate(program, info.name)
-    const componentInfo = getInformation(program)
+    const componentInfo = { ...info, ...getInformation(program) }
     await create(componentInfo)
-    messages.showSuccessMessage({ ...info, ...componentInfo });
+    messages.showSuccessMessage(componentInfo);
   } catch (e) {
     messages.showErrorMessage(e)
   }
