@@ -10,19 +10,21 @@ const title = chalk.cyanBright.bold;
 const codes = require('./codes');
 
 const showErrorMessage = (e) => {
-  const { err } = e;
-  switch (err) {
-    case codes.WRONG_TYPE :
+  switch (e) {
+    case codes.WRONG_TYPE:
       console.log(`${error("Error:")} invalid type. Valid types are ${highlight("func")}, ${highlight("hoc")} and ${highlight("class")}`);
       break;
-    case codes.MULTI_TYPE :
+    case codes.MULTI_TYPE:
       console.log(`${error("Error:")} multiple types suppplied.`);
       break;
-    case codes.NO_NAME    :
+    case codes.NO_NAME:
       console.log(`${error("Error:")} no name was supplied`);
       break;
-    case codes.UPPERCASE  :
+    case codes.UPPERCASE:
       console.log(`${warning("Warning:")} name must start with uppercase letter`)
+      break;
+    case codes.INVALID_STYLE:
+      console.log(`${error('Error:')} style options are invalid. Only one styling type is allowed`)
       break;
     default:
       console.log(`${error("Unexpected Error:")} ${e}`);
@@ -35,41 +37,45 @@ const showErrorMessage = (e) => {
 
 const showSuccessMessage = (info) => {
   let styling = "";
-  if( info.style ){
-    if( info.style && info.style.js ){
+  if (info.style) {
+    if (info.style && info.style.js) {
       styling = `js `;
-      if( info.verbose ){
-        styling += `(using ${chalk.magenta(info.style.js)} object in ${chalk.magenta(".../"+info.name+"/index.js")} file)`
+      if (info.verbose) {
+        styling += `(using ${chalk.magenta(info.style.js)} object in ${chalk.magenta(".../" + info.name + "/index.js")} file)`
       }
     }
-    if( info.style.css ){
-      if(info.style.js) styling += ", "
+    if (info.style.css) {
+      if (info.style.js) styling += ", "
       styling += `css `
-      if( info.verbose ){
-        styling += `(using ${chalk.magenta(info.style.css)} class in ${chalk.magenta(info.name+".css")} file)`
+      if (info.verbose) {
+        styling += `(using ${chalk.magenta(info.style.css)} class in ${chalk.magenta(info.name + ".css")} file)`
       }
     }
   }
-  if(styling === ""){
+  if (styling === "") {
     styling = "None"
   }
 
   let pString = "[";
   let plength = 0;
-  if(info.props){
+  if (info.props) {
     plength = info.props.length
-    info.props.forEach((prop)=>{
+    info.props.forEach((prop) => {
       pString = pString + ` ${prop} ,`
     })
   }
-  pString = pString.slice(0,-1) + "]";
-  const typeString = info.type === "func" ? "Functional" :
-  info.type === "hoc" ? "Higher Order" : info.type === "cont" ? "Container" : "Class";
+  pString = pString.slice(0, -1) + "]";
+  const typeString =
+    info.type === "func" ? "Functional" :
+      info.type === "hoc" ? "Higher Order" :
+        info.type === "cont" ? "Container" :
+          info.type === "styled" ? "Styled" :
+            "Class";
   console.log(`${success("Success!")}`);
   console.log(`${title("Name:   ")} ${info.name}`);
   console.log(`${title("Path:   ")} ${info.path}`);
   console.log(`${title("Type:   ")} ${typeString} Component`);
-  console.log(`${title("Props:  ")} ${plength > 0 ?  pString : "None" }`);
+  console.log(`${title("Props:  ")} ${plength > 0 ? pString : "None"}`);
   console.log(`${title("Styling:")} ${styling}`);
 }
 
