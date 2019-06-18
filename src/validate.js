@@ -1,7 +1,16 @@
 const Codes = require('./codes')
 const Types = require('./types')
+const Utils = require('./utils');
 
 const countIfDefined = (prev, next) => prev + (next ? 1 : 0)
+
+const checkPath = async (path) => {
+    try {
+        const value = await Utils.checkDirectory(path);
+    } catch (e) {
+        throw Codes.PATH_NOT_FOUND
+    }
+}
 
 const checkName = (name, force) => {
     if (name === undefined) {
@@ -31,8 +40,9 @@ const checkStyle = (program) => {
     }
 }
 
-const validate = (program, name) => {
-    checkName(name, program.forceName)
+const validate = async (program) => {
+    await checkPath(program.info.path)
+    checkName(program.info.name, program.forceName)
     checkType(program)
     checkStyle(program)
 }

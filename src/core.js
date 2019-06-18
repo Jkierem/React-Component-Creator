@@ -10,6 +10,7 @@ const validate = require('./validate')
 const createHOC = require('./createHOC');
 const createFuncComponent = require('./createFuncComponent');
 const createClassComponent = require('./createClassComponent');
+const createStyledComponent = require('./createStyledComponent');
 const createContainerComponent = require('./createContainerComponent');
 
 const pickType = (program) => {
@@ -20,20 +21,63 @@ const pickType = (program) => {
 
 const pickProps = ({ props }) => props ? props.split(',') : []
 
+const pickStyle = (program) => {
+  const { styled, css, inline, info } = program;
+  let style = {}
+
+  if (inline) {
+    if (inline === true) {
+      style.js = `${info.name.toLowerCase()}Style`
+    } else {
+      style.js = inline
+    }
+  }
+
+  if (css) {
+    if (css === true) {
+      style.css = info.name.toLowerCase()
+    } else {
+      style.css = css
+    }
+  }
+
+  if (styled) {
+    if (styled === true) {
+      style.styled = 'div'
+    } else {
+      style.styled = `${styled}`
+    }
+  }
+
+  return style;
+}
+
 const getInformation = (program) => {
   return {
     type: pickType(program),
-    props: pickProps(program)
+    props: pickProps(program),
+    style: pickStyle(program)
   }
 }
 
 const create = (info) => {
-  return new Promise((resolve, reject) => resolve(true))
+  const { type } = info;
+  switch (type) {
+    case 'styled':
+      return createStyledComponent(info)
+    case 'func':
+      return createFuncComponent(info);
+    case 'cont':
+      return createContainerComponent(info);
+    case 'hoc':
+      return createHOC(info);
+    default:
+      return createClassComponent(info);
+  }
 }
 
 const runProgram = async (argv) => {
   let info = {}
-  let componentInfo = {}
   program
     .version("2.0.0")
     .arguments('<name> [path]')
@@ -55,10 +99,11 @@ const runProgram = async (argv) => {
     .option('-p --props <props>', 'Specify the names of props to be passed on. If it is a functional component, destructuring of props will be used. If it is a HOC the props will be injected. The props must be separated by comma with no spaces.')
   program.parse(argv);
   try {
-    validate(program, info.name)
+    program.info = info;
+    await validate(program)
     const componentInfo = { ...info, ...getInformation(program) }
     await create(componentInfo)
-    messages.showSuccessMessage(componentInfo);
+    messages.showSuccessMessage({ ...componentInfo, verbose: program.verbose });
   } catch (e) {
     messages.showErrorMessage(e)
   }

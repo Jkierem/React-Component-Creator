@@ -5,6 +5,7 @@ const MULTI_TYPE = "MULTI_TYPE"
 const NO_NAME = "NO_NAME"
 const UPPERCASE = "UPPERCASE"
 const INVALID_STYLE = 'INVALID_STYLE'
+const PATH_NOT_FOUND = 'PATH_NOT_FOUND'
 
 module.exports = {
   WRONG_TYPE,
@@ -12,4 +13,5 @@ module.exports = {
   NO_NAME,
   UPPERCASE,
   INVALID_STYLE,
+  PATH_NOT_FOUND
 }

@@ -12,7 +12,7 @@ const codes = require('./codes');
 const showErrorMessage = (e) => {
   switch (e) {
     case codes.WRONG_TYPE:
-      console.log(`${error("Error:")} invalid type. Valid types are ${highlight("func")}, ${highlight("hoc")} and ${highlight("class")}`);
+      console.log(`${error("Error:")} invalid type. Valid types are ${highlight("func")}, ${highlight("hoc")}, ${highlight("cont")}, ${highlight("styled")} and ${highlight("class")}`);
       break;
     case codes.MULTI_TYPE:
       console.log(`${error("Error:")} multiple types suppplied.`);
@@ -26,6 +26,9 @@ const showErrorMessage = (e) => {
     case codes.INVALID_STYLE:
       console.log(`${error('Error:')} style options are invalid. Only one styling type is allowed`)
       break;
+    case codes.PATH_NOT_FOUND:
+      console.log(`${error('Error:')} path is nowhere to be found`)
+      break;
     default:
       console.log(`${error("Unexpected Error:")} ${e}`);
       console.log(e);
@@ -36,35 +39,30 @@ const showErrorMessage = (e) => {
 
 
 const showSuccessMessage = (info) => {
-  let styling = "";
+  let styling = "None";
   if (info.style) {
-    if (info.style && info.style.js) {
+    if (info.style.js) {
       styling = `js `;
       if (info.verbose) {
         styling += `(using ${chalk.magenta(info.style.js)} object in ${chalk.magenta(".../" + info.name + "/index.js")} file)`
       }
     }
     if (info.style.css) {
-      if (info.style.js) styling += ", "
-      styling += `css `
+      styling = `css `
       if (info.verbose) {
         styling += `(using ${chalk.magenta(info.style.css)} class in ${chalk.magenta(info.name + ".css")} file)`
       }
     }
-  }
-  if (styling === "") {
-    styling = "None"
+    if (info.style.styled) {
+      styling = `js `
+      if (info.verbose) {
+        styling += `(using ${chalk.magenta(info.style.styled)} styled component tag in ${chalk.magenta(".../" + info.name + "/index.js")})`
+      }
+    }
   }
 
-  let pString = "[";
-  let plength = 0;
-  if (info.props) {
-    plength = info.props.length
-    info.props.forEach((prop) => {
-      pString = pString + ` ${prop} ,`
-    })
-  }
-  pString = pString.slice(0, -1) + "]";
+  let pString = info.props.length ? `[ ${info.props.join(', ')} ]` : 'None'
+
   const typeString =
     info.type === "func" ? "Functional" :
       info.type === "hoc" ? "Higher Order" :
@@ -75,7 +73,7 @@ const showSuccessMessage = (info) => {
   console.log(`${title("Name:   ")} ${info.name}`);
   console.log(`${title("Path:   ")} ${info.path}`);
   console.log(`${title("Type:   ")} ${typeString} Component`);
-  console.log(`${title("Props:  ")} ${plength > 0 ? pString : "None"}`);
+  console.log(`${title("Props:  ")} ${pString}`);
   console.log(`${title("Styling:")} ${styling}`);
 }
 
