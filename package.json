@@ -8,6 +8,7 @@
   },
   "bin": {
     "createComponent": "./src/juan-component.js",
+    "createClass": "./src/juan-class.js",
     "createFunctional": "./src/juan-func.js",
     "createHigher": "./src/juan-hoc.js",
     "createContainer": "./src/juan-cont.js",
