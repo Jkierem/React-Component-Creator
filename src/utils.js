@@ -7,6 +7,14 @@ const pick = (keys, obj) => {
   return Object.keys(obj).reduce((acc, key) => keys.includes(key) ? { ...acc, [key]: obj[key] } : acc, {})
 }
 
+const BinaryOr = (a, b) => a || b
+const Or = (...values) => values.reduce(BinaryOr)
+
+const pickCommaSeparatedList = (att) => ({ [att]: data }) => data ? data.split(',') : []
+
+const getHooksImport = (hooks) => hooks.length === 0 ? '' : `, { ${hooks.join(', ')} }`
+const getImports = (imports) => imports.map(x => `import ${x} from '${x}';`).join('\n')
+
 const checkDirectory = (dir) => {
   return new Promise((resolve, reject) => {
     fs.stat(dir, (err, stats) => {
@@ -105,7 +113,7 @@ const createComponent = (info, getContent) => {
       const actions = path.join(fullPath, "actions.js")
       const constants = path.join(fullPath, "constants.js")
       const reducer = path.join(fullPath, "reducer.js")
-      const reducerContent = `export default const ${name}Reducer = (state,action) => state;`
+      const reducerContent = `const ${name}Reducer = (state,action) => state;\n\nexport default ${name}Reducer;`
       const selectors = path.join(fullPath, "selectors.js")
       const selContent = `import { createSelector } from 'reselect';\n`
       return new Promise(function (resolve, reject) {
@@ -126,8 +134,13 @@ module.exports = {
   checkDirectory,
   createDirectory,
   createFile,
+  createComponent,
   getStyleStrings,
   getPropsDeconstruction,
-  createComponent,
-  pick
+  getHooksImport,
+  getImports,
+  pick,
+  pickCommaSeparatedList,
+  Or,
+  BinaryOr,
 }

@@ -60,8 +60,12 @@ const showSuccessMessage = (info) => {
       }
     }
   }
-
-  let pString = info.props.length ? `[ ${info.props.join(', ')} ]` : 'None'
+  const arrayNotationOrNone = (data) => data.length ? `[ ${data.join(', ')} ]` : 'None'
+  const props = arrayNotationOrNone(info.props)
+  const hooks = arrayNotationOrNone(info.hooks);
+  const imports = arrayNotationOrNone(info.imports);
+  const implicit = info.verbose ? ` (implicit ${chalk.magenta(info.type === "styled" ? 'styled-components' : 'React')})` : '';
+  const ignoredHooks = info.type !== "func" && info.hooks.length !== 0 ? ` (${chalk.magenta("ignored")})` : ''
 
   const typeString =
     info.type === "func" ? "Functional" :
@@ -73,8 +77,10 @@ const showSuccessMessage = (info) => {
   console.log(`${title("Name:   ")} ${info.name}`);
   console.log(`${title("Path:   ")} ${info.path}`);
   console.log(`${title("Type:   ")} ${typeString} Component`);
-  console.log(`${title("Props:  ")} ${pString}`);
+  console.log(`${title("Props:  ")} ${props}`);
   console.log(`${title("Styling:")} ${styling}`);
+  console.log(`${title("Hooks:")}   ${hooks}${ignoredHooks}`);
+  console.log(`${title("Imports:")} ${imports}${implicit}`)
 }
 
 module.exports = {

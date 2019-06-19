@@ -3,21 +3,22 @@
 const utils = require('./utils');
 
 const getContent = (info) => {
-  const { name , props , style } = info;
-  const { getPropsDeconstruction:getProps } = utils;
-  const { styleObj , styleInline , cssStyle , cssClass }
-  = utils.getStyleStrings(name,style);
+  const { name, props, style, hooks, imports } = info;
+  const { getPropsDeconstruction: getProps, getHooksImport: getHooks, getImports } = utils;
+  const { styleObj, styleInline, cssStyle, cssClass }
+    = utils.getStyleStrings(name, style);
 
-  return `import React from 'react'\n`+
-         `${cssStyle}${styleObj}\n` +
-         `const ${name} = (${getProps(props)}) => {\n` +
-         `  return(\n` +
-         `    <div${cssClass}${styleInline}>\n` +
-         `      ${name}\n` +
-         `    </div>\n` +
-         `  )\n}\n\nexport default ${name};`
+  return `import React${getHooks(hooks)} from 'react'\n` +
+    `${getImports(imports)}${imports.length ? '\n' : ''}` +
+    `${cssStyle}${styleObj}\n` +
+    `const ${name} = (${getProps(props)}) => {\n` +
+    `  return(\n` +
+    `    <div${cssClass}${styleInline}>\n` +
+    `      ${name}\n` +
+    `    </div>\n` +
+    `  )\n}\n\nexport default ${name};`
 }
 
 module.exports = (info) => {
-  return utils.createComponent(info,getContent)
+  return utils.createComponent(info, getContent)
 }

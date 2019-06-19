@@ -10,7 +10,8 @@
     "createComponent": "./src/juan-component.js",
     "createFunctional": "./src/juan-func.js",
     "createHigher": "./src/juan-hoc.js",
-    "createContainer": "./src/juan-cont.js"
+    "createContainer": "./src/juan-cont.js",
+    "createStyled": "./src/juan-styled.js"
   },
   "preferGlobal": true,
   "repository": {
