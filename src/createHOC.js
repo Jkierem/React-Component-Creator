@@ -4,10 +4,11 @@ const pt = require('path');
 const utils = require('./utils');
 
 const createHOC = (info) => {
-  const { name , path } = info;
+  const { name, path, imports } = info;
 
-  let content=
+  let content =
     `import React from 'react'\n\n` +
+    `${utils.getImports(imports)}${imports.length ? '\n' : ''}` +
     `const ${name} = (WrappedComponent) => {\n` +
     `    return{\n` +
     `      class extends React.Component {\n` +
@@ -26,12 +27,12 @@ const createHOC = (info) => {
     `    }\n` +
     `}\n` +
     `\nexport default ${name};\n`;
-  const fullPath = pt.join(path,name);
-  const fileName = pt.join(fullPath,"index.js");
-  return utils.checkDirectory(path).then(()=>{
+  const fullPath = pt.join(path, name);
+  const fileName = pt.join(fullPath, "index.js");
+  return utils.checkDirectory(path).then(() => {
     return utils.createDirectory(fullPath)
-  }).then(()=>{
-    return utils.createFile(fileName,content)
+  }).then(() => {
+    return utils.createFile(fileName, content)
   })
 }
 
