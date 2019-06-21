@@ -6,6 +6,7 @@ const error = chalk.white.bgRed;
 const highlight = chalk.greenBright;
 const success = chalk.greenBright;
 const title = chalk.cyanBright.bold;
+const emphasis = chalk.magenta;
 
 const codes = require('./codes');
 
@@ -44,19 +45,19 @@ const showSuccessMessage = (info) => {
     if (info.style.js) {
       styling = `js `;
       if (info.verbose) {
-        styling += `(using ${chalk.magenta(info.style.js)} object in ${chalk.magenta(".../" + info.name + "/index.js")} file)`
+        styling += `(using ${emphasis(info.style.js)} object in ${emphasis(info.path + '/' + info.name + "/index.js")} file)`
       }
     }
     if (info.style.css) {
       styling = `css `
       if (info.verbose) {
-        styling += `(using ${chalk.magenta(info.style.css)} class in ${chalk.magenta(info.name + ".css")} file)`
+        styling += `(using ${emphasis(info.style.css)} class in ${emphasis(info.name + ".css")} file)`
       }
     }
-    if (info.style.styled) {
+    if (info.style.styled || info.type === 'styled') {
       styling = `js `
       if (info.verbose) {
-        styling += `(using ${chalk.magenta(info.style.styled)} styled component tag in ${chalk.magenta(".../" + info.name + "/index.js")})`
+        styling += `(using ${emphasis(info.style.styled)} styled component tag in ${emphasis(info.path + '/' + info.name + "/index.js")})`
       }
     }
   }
@@ -64,8 +65,8 @@ const showSuccessMessage = (info) => {
   const props = arrayNotationOrNone(info.props)
   const hooks = arrayNotationOrNone(info.hooks);
   const imports = arrayNotationOrNone(info.imports);
-  const implicit = info.verbose ? ` (implicit ${chalk.magenta(info.type === "styled" ? 'styled-components' : 'React')})` : '';
-  const ignoredHooks = info.type !== "func" && info.hooks.length !== 0 ? ` (${chalk.magenta("ignored")})` : ''
+  const implicit = info.verbose ? ` (implicit ${emphasis(info.type === "styled" ? 'styled-components' : 'React')})` : '';
+  const ignoredHooks = info.type !== "func" && info.hooks.length !== 0 ? ` (${emphasis("ignored")})` : ''
 
   const typeString =
     info.type === "func" ? "Functional" :
@@ -77,13 +78,21 @@ const showSuccessMessage = (info) => {
   console.log(`${title("Name:   ")} ${info.name}`);
   console.log(`${title("Path:   ")} ${info.path}`);
   console.log(`${title("Type:   ")} ${typeString} Component`);
-  console.log(`${title("Props:  ")} ${props}`);
   console.log(`${title("Styling:")} ${styling}`);
+  console.log(`${title("Props:  ")} ${props}`);
   console.log(`${title("Hooks:")}   ${hooks}${ignoredHooks}`);
   console.log(`${title("Imports:")} ${imports}${implicit}`)
 }
 
+const showDebug = (should, content) => {
+  if (should) {
+    console.log(`\n\n${emphasis("File Content: ")}`)
+    console.log(`${content}`)
+  }
+}
+
 module.exports = {
   showErrorMessage,
-  showSuccessMessage
+  showSuccessMessage,
+  showDebug
 }

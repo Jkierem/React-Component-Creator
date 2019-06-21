@@ -30,6 +30,10 @@ const getContent = (info) => {
     `export default connect(mapStateToProps,mapDispatchToProps)(${name});`
 }
 
-module.exports = (info) => {
+const create = (info) => {
   return utils.createComponent(info, getContent)
 }
+
+create.getContent = getContent;
+
+module.exports = create;

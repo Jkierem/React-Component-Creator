@@ -29,7 +29,7 @@ const pickHooks = utils.pickCommaSeparatedList('hooks');
 const pickImports = utils.pickCommaSeparatedList('imports');
 
 const pickStyle = (program) => {
-  const { styled, css, inline, info } = program;
+  const { styled, css, inline, info, type } = program;
   let style = {}
 
   if (inline) {
@@ -48,8 +48,8 @@ const pickStyle = (program) => {
     }
   }
 
-  if (styled) {
-    if (styled === true) {
+  if (styled || type === 'styled') {
+    if (styled === true || !styled) {
       style.styled = 'div'
     } else {
       style.styled = `${styled}`
@@ -85,6 +85,22 @@ const create = (info) => {
   }
 }
 
+const debug = (info) => {
+  const { type } = info;
+  switch (type) {
+    case 'styled':
+      return createStyledComponent.getContent(info)
+    case 'func':
+      return createFuncComponent.getContent(info);
+    case 'cont':
+      return createContainerComponent.getContent(info);
+    case 'hoc':
+      return createHOC.getContent(info);
+    default:
+      return createClassComponent.getContent(info);
+  }
+}
+
 const runProgram = async (argv) => {
   let info = {}
   program
@@ -116,8 +132,11 @@ const runProgram = async (argv) => {
     program.info = info;
     await validate(program)
     const componentInfo = { ...info, ...getInformation(program) }
-    if (!program.debug && !program.dry) await create(componentInfo)
+    if (!program.debug && !program.dry) {
+      await create(componentInfo)
+    }
     messages.showSuccessMessage({ ...componentInfo, verbose: program.debug || program.verbose });
+    messages.showDebug(program.debug, debug(componentInfo))
   } catch (e) {
     messages.showErrorMessage(e)
   }

@@ -19,6 +19,10 @@ const getContent = (info) => {
     `  )\n}\n\nexport default ${name};`
 }
 
-module.exports = (info) => {
+const create = (info) => {
   return utils.createComponent(info, getContent)
 }
+
+create.getContent = getContent;
+
+module.exports = create;
