@@ -2,6 +2,12 @@
 
 Simple NodeJS command line tool to create React components.
 
+## Install
+
+```shell
+$ npm install -g juan-component
+```
+
 ## Usage
 
 ```shell
