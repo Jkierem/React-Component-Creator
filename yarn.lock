@@ -2,6 +2,18 @@
 # yarn lockfile v1
 
 
+"@juan-utils/functions@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@juan-utils/functions/-/functions-2.1.0.tgz#2f5da020b8b5cda918fb3aab65f222db1aec9b1b"
+  integrity sha512-g1EaFxvDU+gUpRLJ1QHW25H3GFAzwdf4sB5SDRBsHV+5oA1MEjcxulSg7j5oHvxUEJccSKjXk81DipItQ8yeCw==
+
+"@juan-utils/ramda-structures@^2.10.2":
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/@juan-utils/ramda-structures/-/ramda-structures-2.10.2.tgz#ead21fbda2b4633356b2520d0da36c1a4a0f66f1"
+  integrity sha512-7FE4O7JMJXRZkft1R73+bX+8Zdl/BolKtLIE6J2ZJFEYQmbV/vuRVNPhAgyeC6iv5Wt1QNXUIxqwuMBxapUqdQ==
+  dependencies:
+    ramda "0.27.0"
+
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
@@ -37,6 +49,11 @@ escape-string-regexp@^1.0.5:
 has-flag@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
+
+ramda@0.27.0:
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.27.0.tgz#915dc29865c0800bf3f69b8fd6c279898b59de43"
+  integrity sha512-pVzZdDpWwWqEVVLshWUHjNwuVP7SfcmPraYuqocJp1yo2U1R7P+5QAfDhdItkuoGqIBnBYrtPp7rEPqDn9HlZA==
 
 supports-color@^5.3.0:
   version "5.4.0"

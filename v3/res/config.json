@@ -1,0 +1,61 @@
+{
+    "namedExports": false,
+    "defaultPath" : "./src/",
+    "defaultComponentType" : "Functional",
+    "knownImports" : [
+        {
+            "input": "react",
+            "type" : "default",
+            "name" : "React",
+            "path" : "react"
+        },
+        {
+            "input": "react-dom",
+            "type" : "default",
+            "name" : "ReactDOM",
+            "path" : "react-dom"
+        }
+    ],
+    "knownHooks" : [
+        {
+            "input" : "useState",
+            "type"  : "react"
+        },
+        {
+            "input" : "useEffect",
+            "type"  : "react"
+        },
+        {
+            "input" : "useContext",
+            "type"  : "react"
+        },
+        {
+            "input" : "useReducer",
+            "type"  : "react"
+        },
+        {
+            "input" : "useCallback",
+            "type"  : "react"
+        },
+        {
+            "input" : "useMemo",
+            "type"  : "react" 
+        },
+        {
+            "input" : "useRef",
+            "type"  : "react" 
+        },
+        {
+            "input" : "useImperativeHandle",
+            "type"  : "react" 
+        },
+        {
+            "input" : "useLayoutEffect",
+            "type"  : "react" 
+        },
+        {
+            "input" : "useDebugValue",
+            "type"  : "react" 
+        }
+    ]
+}

@@ -3,6 +3,7 @@
   "version": "2.0.5",
   "description": "Tool to create React components.",
   "main": "src/juan-component.js",
+  "type": "module",
   "scripts": {
     "test": "node src/juan-component.js"
   },
@@ -30,6 +31,8 @@
   },
   "homepage": "https://github.com/Jkierem/juan-component#readme",
   "dependencies": {
+    "@juan-utils/functions": "^2.1.0",
+    "@juan-utils/ramda-structures": "^2.10.2",
     "chalk": "^2.4.1",
     "commander": "^2.16.0"
   }
